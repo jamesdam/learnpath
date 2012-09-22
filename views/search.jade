@@ -1,0 +1,48 @@
+extends layout
+
+block content
+  h2 Your search result
+
+  h3 Beginner
+  div.row-fluid
+      ul
+        include bit/tut_search_item
+      ul
+        include bit/tut_search_item
+      ul
+        include bit/tut_search_item
+        
+  h3 Intermediate
+  div.row-fluid
+      ul
+        include bit/tut_search_item
+      ul
+        include bit/tut_search_item
+      ul
+        include bit/tut_search_item
+
+  h3 Advance
+  div.row-fluid
+      ul
+        include bit/tut_search_item
+      ul
+        include bit/tut_search_item
+      ul
+        include bit/tut_search_item
+
+
+ // div.tabbable.tabs-left
+    ul.nav.nav-tabs
+      li
+        a(href='#lA', data-toggle="tab") Newbie
+      li
+        a(href='#lB', data-toggle="tab") Intermediate
+      li 
+        a(href='#lC', data-toggle="tab") Advance
+    div.tab-content
+      .tab-pane#lA
+        p Newbie
+      .tab-pane#lB
+        p Intermediate
+      .tab-pane#lC
+        p Advance
