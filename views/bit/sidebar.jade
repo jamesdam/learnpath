@@ -1,0 +1,33 @@
+
+mixin topic_tags(tags)
+  each skill in tags
+    span.label.label-info #{skill}
+    br
+
+mixin statistics(stat)
+  ul.unstyled
+  li
+    i.icon-eye-open
+    span  Views #{stat.views}
+  li
+    i.icon-thumbs-up
+    span  Likes #{stat.likes}
+  li
+    i.icon-share
+    span  Share #{stat.shares}
+
+
+block sharebtn
+  button.btn.btn-small Share
+  button.btn.btn-small Tweet
+  button.btn.btn-small Link
+  
+div.span3.well.well-small
+  h5 Dependencies:
+  +topic_tags(tut.requires)
+  h5 Skill you will learn:
+  +topic_tags(tut.acquires)
+  h5 Statistics
+  +statistics(tut.stat)
+  h5 Share
+  block sharebtn

@@ -46,6 +46,7 @@ exports.tutorial = function(req, res) {
       title: tut.title,
       tut: tut
     });
+
   }
 }
 
