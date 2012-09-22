@@ -100,8 +100,26 @@ exports.login = function(req, res){
 
 exports.newTutorial = function(req, res){
   console.log("new tut ");
-  res.render('new_tut', { title: 'Login' });
+  res.render('new_tut', {});
 };
+
+exports.postNewTutorial = function(req, res){
+  console.log(req.body);
+  var title = req.body.title;
+  res.send("respond with a resource");
+};
+
+
+exports.newLearnpath = function(req, res){
+  console.log("new path ");
+  res.render('new_path', {});
+};
+
+exports.postNewLearnpath = function(req, res){
+  console.log(req.body);
+  var title = req.body.title;
+};
+
 
 
 /*
@@ -124,11 +142,6 @@ exports.postLearnpathComment = function(req, res){
   res.send("respond with a resource");
 };
 
-exports.postNewTutorial = function(req, res){
-  console.log(req.body);
-  var title = req.body.title;
-  res.send("respond with a resource");
-};
 
 
 

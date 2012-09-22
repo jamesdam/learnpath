@@ -59,6 +59,10 @@ app.get('/', routes.index);
 app.get('/tutorial/new', routes.newTutorial);
 app.post('/tutorial/new', routes.postNewTutorial);
 
+app.get('/learnpath/new', routes.newLearnpath);
+app.post('/learnpath/new', routes.postNewLearnpath);
+
+
 app.get('/login', routes.login);
 app.get('/learnpath/:lid', routes.learnpath);
 app.get('/tutorial/:tid', routes.tutorial);

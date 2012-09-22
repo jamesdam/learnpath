@@ -1,0 +1,21 @@
+form.form-horizontal(action= "" , method= "POST")
+  legend Create New Tutorial
+  div.control-group
+    label.control-label(for="pathBase") Base
+    div.controls
+      input#tutTitle.span6(type="text" , placeholder="Requirements", name ="base")
+  div.control-group
+    label.control-label(for="node1") Node 1
+    div.controls
+      input#pathNode1.span6(type="text",placeholder="Node 1", name ="node1")
+  div.control-group
+    div.controls
+      button#newPathNode.btn.btn-primary + New Node
+
+  div.control-group
+    label.control-label(for="pathGoal") Goal
+    div.controls
+      input#pathGoal.span6(type="text",placeholder="Goal", name ="goal")
+  div.control-group
+    div.controls
+      button.span3.btn.btn-primary(type = "submit") Submit
