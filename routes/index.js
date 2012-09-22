@@ -44,7 +44,7 @@ exports.tutorial = function(req, res) {
                     profile_url: 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash4/371019_697811725_247259128_q.jpg'},
           content: 'Hello world!'}
       ]
-    };  
+    };
   if (!tutorialId) {
     res.send("response with a resource");
   } else {
@@ -61,7 +61,7 @@ exports.tutorial = function(req, res) {
           tut: tut
     });
 
-    })  
+    })
 
 
 
@@ -126,7 +126,7 @@ exports.postNewTutorial = function(req, res){
   tut.requiredTopics = req.body.requires;
   modelProvider.createTutorial(tut, function(err, tut_id) {
     var title;
-    if (err) 
+    if (err)
       title = err;
     else
       title = tut_id;
@@ -182,15 +182,15 @@ exports.profile = function(req, res){
     skills : ["javascript","javascript-basic","nodejs","nodejs-intermediate","expressjs-basic","openVC-basic","objectiveC-basic"],
     completedPaths : [
       { name :"basic javascript" , url : "http://google.com"},
-      { name :"basic javascript" , url : "http://google.com"},    
+      { name :"basic javascript" , url : "http://google.com"},
       { name :"basic javascript" , url : "http://google.com"}
     ],
     completedTutorials: [
       { name :"basic javascript" , url : "http://google.com"},
-      { name :"basic javascript" , url : "http://google.com"},    
-      { name :"basic javascript" , url : "http://google.com"},  
-      { name :"basic javascript" , url : "http://google.com"},    
-      { name :"basic javascript" , url : "http://google.com"}      
+      { name :"basic javascript" , url : "http://google.com"},
+      { name :"basic javascript" , url : "http://google.com"},
+      { name :"basic javascript" , url : "http://google.com"},
+      { name :"basic javascript" , url : "http://google.com"}
     ]
 
   }
@@ -198,6 +198,13 @@ exports.profile = function(req, res){
 };
 
 
-
-
-
+exports.topic_hint = function(req, res) {
+  var query = req.query.q;
+  // fetch the list of topics starting with this query
+  res.send([
+      {"id":"856","name":"Javascript"},
+      {"id":"1035","name":"Python"},
+      {"id":"1048","name":"C++"},
+      {"id":"1113","name":"NodeJs"}
+  ]);
+}
