@@ -1,5 +1,7 @@
 extends layout
 
+include bit/sidebar
+
 block content
   div.span7
     h3 #{tut.title}
@@ -10,4 +12,12 @@ block content
     a.span6.well.externtut(href=#{tut.url}) #{tut.url}
     br
     hr
-  include bit/sidebar
+  div.span3.well.well-small
+    h5 Dependencies:
+    +topic_tags(tut.requires)
+    h5 Skill you will learn:
+    +topic_tags(tut.acquires)
+    h5 Statistics
+    +statistics(tut.stat)
+    h5 Share
+    +sharebtn

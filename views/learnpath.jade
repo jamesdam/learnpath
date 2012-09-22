@@ -1,5 +1,7 @@
 extends layout
 
+include bit/sidebar
+
 block content
   div.row-fluid
     div.span9
@@ -17,16 +19,10 @@ block content
           button.circle-badge(data-toggle="collapse", data-target="#path-node-3") 3
           span Topic 3
         div#path-node-3.collapse.in abc
-    div.span3  
-      div.well
-          li
-           i.icon-eye-open 
-           span 1000
-          li
-           i.icon-thumbs-up 
-           span 1000
-          li
-           i.icon-share 
-           span 1000
+    div.span3.well.well-small  
+      h5 Statistics
+      +statistics(path.stat)
+      h5 Share
+      +sharebtn
   
 
