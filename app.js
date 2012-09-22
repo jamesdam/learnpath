@@ -55,9 +55,11 @@ passport.use(new LocalStrategy(
 ));
 
 app.get('/', routes.index);
-app.get('/users', user.list);
 app.get('/login', routes.login);
 app.get('/path', routes.login);
+app.get('/learnpath/:lid', routes.learnpath);
+app.get('/tutorial/:tid', routes.tutorial);
+app.get('/profile/:uid', user.profile);
 
 app.get('/auth',
   passport.authenticate('local', {failureRedirect: '/login'}),
