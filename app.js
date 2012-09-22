@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , search = require('./routes/search')
   , http = require('http')
   , path = require('path')
   , passport = require('passport')
@@ -57,6 +58,7 @@ passport.use(new LocalStrategy(
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/login', routes.login);
+app.get('/search', search.list);
 
 app.get('/auth',
   passport.authenticate('local', {failureRedirect: '/login'}),

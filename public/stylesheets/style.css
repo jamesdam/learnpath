@@ -41,3 +41,40 @@ filter:alpha(opacity=100); /* For IE8 and earlier */
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
+.top_border_14 {
+  padding-top: 4px;
+  border-top: 1px solid #E2E2E2;
+  margin-top: 4px;
+  height:14px;
+  line-height: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.top_border_30 {
+  padding-top: 4px;
+  border-top: 1px solid #E2E2E2;
+  margin-top: 4px;
+  height:30px;
+  line-height: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bot_border_20 {
+  padding-top: 2px;
+  border-bottom: 2px solid #E2E2E2;
+  margin-top: 2px;
+  height:20px;
+  line-height: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.search_item_bold_text {
+  font-size: 25px;
+  overflow: : hidden;
+  text-align: left;
+
+}
