@@ -1,4 +1,6 @@
-
+var ModelProvider = require('../models/model').ModelProvider;
+var mongoose = require('mongoose');
+var modelProvider = new ModelProvider(mongoose, '/localhost', 27017);
 /*
  * GET home page.
  */
@@ -12,12 +14,7 @@ exports.index = function(req, res) {
 };
 
 exports.tutorial = function(req, res) {
-  console.log(req.params);
   var tutorialId = req.params.tid;
-  if (!tutorialId) {
-    res.send("response with a resource");
-  } else {
-    // fetch tutorial based on id
     var tut = {
       id: tutorialId,
       title: 'NodeJS web basic',
@@ -47,11 +44,26 @@ exports.tutorial = function(req, res) {
                     profile_url: 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash4/371019_697811725_247259128_q.jpg'},
           content: 'Hello world!'}
       ]
-    };
-    res.render('tutorial', {
-      title: tut.title,
-      tut: tut
+    };  
+  if (!tutorialId) {
+    res.send("response with a resource");
+  } else {
+
+        // fetch tutorial based on id
+    modelProvider.findTutorialById (tutorialId , function (err, tutorial){
+        console.log(tutorial);
+        tut.id = tutorial.id;
+        tut.title = tutorial.name;
+        tut.desc = tutorial.desc;
+        tut.url  = tutorial.content;
+        res.render('tutorial', {
+          title: tut.title,
+          tut: tut
     });
+
+    })  
+
+
 
   }
 }
@@ -104,9 +116,23 @@ exports.newTutorial = function(req, res){
 };
 
 exports.postNewTutorial = function(req, res){
-  console.log(req.body);
-  var title = req.body.title;
-  res.send("respond with a resource");
+ var tut = {};
+  tut.name = req.body.title;
+  tut.description = req.body.description;
+  tut.author = req.body.author;
+  tut.content = req.body.url;
+  tut.imageUrl = req.body.imageUrl;
+  tut.enableTopics = req.body.acquires;
+  tut.requiredTopics = req.body.requires;
+  modelProvider.createTutorial(tut, function(err, tut_id) {
+    var title;
+    if (err) 
+      title = err;
+    else
+      title = tut_id;
+    res.redirect('/tutorial/'+tut_id);
+  });
+
 };
 
 

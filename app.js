@@ -120,7 +120,7 @@ app.get('/', routes.index);
 app.get('/tutorial/new', routes.newTutorial);
 
 // TESTING DATABASE, ENABLE IT LATER
-//app.post('/tutorial/new', routes.postNewTutorial);
+app.post('/tutorial/new', routes.postNewTutorial);
 
 app.get('/learnpath/new', routes.newLearnpath);
 app.post('/learnpath/new', routes.postNewLearnpath);
@@ -150,5 +150,3 @@ http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
-var mongoose = require('mongoose');
-var modelProvider = new ModelProvider(mongoose, '/localhost', 27017);
