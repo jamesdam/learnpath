@@ -6,6 +6,7 @@ var express = require('express')
   , routes = require('./routes')
   , tutorial = require('./routes/tutorial')
   , user = require('./routes/user')
+  , tutorial = require('./routes/tutorial')
   , search = require('./routes/search')
   , http = require('http')
   , path = require('path')
@@ -121,7 +122,7 @@ app.get('/', routes.index);
 app.get('/tutorial/new', tutorial.newTutorial);
 
 // TESTING DATABASE, ENABLE IT LATER
-app.post('/tutorial/new', routes.postNewTutorial);
+app.post('/tutorial/new', tutorial.postNewTutorial);
 
 app.get('/learnpath/new', routes.newLearnpath);
 app.post('/learnpath/new', routes.postNewLearnpath);
@@ -135,7 +136,6 @@ app.get('/learnpath/:lid', routes.learnpath);
 app.get('/tutorial/:tid', tutorial.tutorial);
 app.get('/profile/:uid', user.profile);
 app.get('/search', search.list);
-
 
 
 app.post('/tutorial/:tid/comment',tutorial.postTutorialComment);
