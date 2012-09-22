@@ -1,0 +1,47 @@
+extends layout
+
+mixin topic_tags(tags)
+  each skill in tags
+    span.label.label-info #{skill}
+    br
+
+mixin statistics(stat)
+  ul.unstyled
+  li
+    i.icon-eye-open
+    span  Views #{stat.views}
+  li
+    i.icon-thumbs-up
+    span  Likes #{stat.likes}
+  li
+    i.icon-share
+    span  Share #{stat.shares}
+
+mixin comments(comments)
+  each comment in comments
+
+block sharebtn
+  button.btn.btn-small Share
+  button.btn.btn-small Tweet
+  button.btn.btn-small Link
+
+block content
+  div.span7
+    h3 #{tut.title}
+    div -- by #{tut.createdBy}
+    hr
+    p #{tut.desc}
+    p Read the tutorial:
+    a.span6.well.externtut(href=#{tut.url}) #{tut.url}
+    br
+    hr
+    +comment(tut.comments)
+  div.span3.well.well-small
+    h5 Dependencies:
+    +topic_tags(tut.requires)
+    h5 Skill you will learn:
+    +topic_tags(tut.acquires)
+    h5 Statistics
+    +statistics(tut.stat)
+    h5 Share
+    block sharebtn
