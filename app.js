@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , search = require('./routes/search')
   , http = require('http')
   , path = require('path')
   , passport = require('passport')
@@ -67,6 +68,7 @@ app.get('/login', routes.login);
 app.get('/learnpath/:lid', routes.learnpath);
 app.get('/tutorial/:tid', routes.tutorial);
 app.get('/profile/:uid', user.profile);
+app.get('/search', search.list);
 
 
 
