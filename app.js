@@ -1,4 +1,3 @@
-
 /**
  * Module dependencies.
  */
@@ -13,6 +12,7 @@ var express = require('express')
   , LocalStrategy = require('passport-local').Strategy;
 
 var app = express();
+var ModelProvider = require('./models/model').ModelProvider;
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -27,11 +27,71 @@ app.configure(function(){
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(app.router);
+  app.use(require('stylus').middleware(__dirname + '/public'));
   app.use(express.static(path.join(__dirname, 'public')));
 });
 
 app.configure('development', function(){
   app.use(express.errorHandler());
+});
+
+app.get('/topic', function(req, res){
+  modelProvider.findAllTopic(function(error, topics){
+   res.render('topic_show.jade', {
+            title: 'Blog',
+            topic: topics
+    });
+  });
+})
+
+app.get('/tut/new', function(req, res) {
+    res.render('new_tut.jade', {
+        title: 'New Post'
+
+    });
+});
+
+app.post('/tut/new', function(req, res){
+  var tut = {};
+  tut.name = req.body.title;
+  tut.description = req.body.description;
+  tut.author = req.body.author;
+  tut.content = req.body.url;
+  tut.imageUrl = req.body.imageUrl;
+  tut.enableTopics = req.body.acquires;
+  tut.requiredTopics = req.body.requires;
+  modelProvider.createTutorial(tut, function(err, tut_id) {
+    var title;
+    if (err) 
+      title = err;
+    else
+      title = tut_id;
+    console.log(title);
+    res.render('topic_show.jade', {
+      title: title,
+      topic: []
+    }); 
+  });
+});
+
+app.get('/blog/:id', function(req, res) {
+    articleProvider.findById(req.params.id, function(error, article) {
+        res.render('blog_show.jade',
+        {
+            title: article.title,
+            article:article
+        });
+    });
+});
+
+app.post('/blog/addComment', function(req, res) {
+    articleProvider.addCommentToArticle(req.param('_id'), {
+        person: req.param('person'),
+        comment: req.param('comment'),
+        created_at: new Date()
+       } , function( error, docs) {
+           res.redirect('/blog/' + req.param('_id'))
+       });
 });
 
 // to use persistent login session
@@ -58,7 +118,9 @@ passport.use(new LocalStrategy(
 app.get('/', routes.index);
 
 app.get('/tutorial/new', routes.newTutorial);
-app.post('/tutorial/new', routes.postNewTutorial);
+
+// TESTING DATABASE, ENABLE IT LATER
+//app.post('/tutorial/new', routes.postNewTutorial);
 
 app.get('/learnpath/new', routes.newLearnpath);
 app.post('/learnpath/new', routes.postNewLearnpath);
@@ -83,6 +145,10 @@ app.get('/auth',
   }
 );
 
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+
+var mongoose = require('mongoose');
+var modelProvider = new ModelProvider(mongoose, '/localhost', 27017);
