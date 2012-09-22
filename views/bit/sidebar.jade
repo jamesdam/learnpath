@@ -1,8 +1,7 @@
 
 mixin topic_tags(tags)
   each skill in tags
-    span.label.label-info #{skill}
-    br
+    a.btn.btn-mini.btn-success(href='/topic/' + skill) #{skill}
 
 mixin statistics(stat)
   ul.unstyled

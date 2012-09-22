@@ -5,10 +5,6 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
-}
-
 .im {
     height: 150px;
     width: 100%;
@@ -73,39 +69,10 @@ a {
   text-align: center;
 }
 
-.top_border_14 {
-  padding-top: 4px;
-  border-top: 1px solid #E2E2E2;
-  margin-top: 4px;
-  height:14px;
-  line-height: 14px;
-  overflow: hidden;
-  text-overflow: ellipsis;
+a.btn.btn-mini {
+  margin: 1px;
 }
 
-.top_border_30 {
-  padding-top: 4px;
-  border-top: 1px solid #E2E2E2;
-  margin-top: 4px;
-  height:30px;
-  line-height: 14px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.bot_border_20 {
-  padding-top: 2px;
-  border-bottom: 2px solid #E2E2E2;
-  margin-top: 2px;
-  height:20px;
-  line-height: 14px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.search_item_bold_text {
-  font-size: 25px;
-  overflow: : hidden;
-  text-align: left;
-
+.label {
+  margin-right: 3px;
 }

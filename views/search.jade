@@ -1,48 +1,31 @@
 extends layout
+include bit/sidebar
+
+mixin topic_text(tags)
+  each skill in tags
+    span.label #{skill}
+
+mixin tut_search_item(item)
+  div
+    a(href='/tutorial/' + item.id)
+      strong Loops in Javascript
+    span  By #{item.createdBy}
+    span
+      i.icon-thumbs-up
+      | #{item.stat.likes}
+    span
+      i.icon-eye-open
+      | #{item.stat.views}
+    br
+    +topic_text(item.acquires)
+    p #{item.desc}
 
 block content
-  h2 Your search result
-
-  h3 Beginner
-  div.row-fluid
+  h3 Search result for '#{query}':
+  div.span9
+    each result in results
+      h4 #{result.level}
       ul
-        include bit/tut_search_item
-      ul
-        include bit/tut_search_item
-      ul
-        include bit/tut_search_item
-        
-  h3 Intermediate
-  div.row-fluid
-      ul
-        include bit/tut_search_item
-      ul
-        include bit/tut_search_item
-      ul
-        include bit/tut_search_item
-
-  h3 Advance
-  div.row-fluid
-      ul
-        include bit/tut_search_item
-      ul
-        include bit/tut_search_item
-      ul
-        include bit/tut_search_item
-
-
- // div.tabbable.tabs-left
-    ul.nav.nav-tabs
-      li
-        a(href='#lA', data-toggle="tab") Newbie
-      li
-        a(href='#lB', data-toggle="tab") Intermediate
-      li 
-        a(href='#lC', data-toggle="tab") Advance
-    div.tab-content
-      .tab-pane#lA
-        p Newbie
-      .tab-pane#lB
-        p Intermediate
-      .tab-pane#lC
-        p Advance
+        each tut in result.tuts
+          li
+            +tut_search_item(tut)

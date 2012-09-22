@@ -2,10 +2,10 @@ div.navbar.navbar-fixed-top
   div.navbar-inner
     div.container
       a.brand(href = '/') Learn Path
-      form.navbar-search.input-preend
+      form.navbar-search.input-preend(action='/search', method='GET')
         span.add-on
           span
-          input.span6(name="search",type="text",placeholder = "search")
+          input.span6(name="q", type="text", placeholder = "search")
           i.icon-search.icon-white
       ul.nav.pull-right
         li
