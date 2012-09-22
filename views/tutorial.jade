@@ -1,0 +1,25 @@
+extends layout
+include bit/comments
+include bit/sidebar
+
+block content
+  div.span8
+    h3 #{tut.title}
+    div -- by #{tut.createdBy}
+    hr
+    p #{tut.desc}
+    p Read the tutorial:
+    a.well.externtut(href=tut.url) #{tut.url}
+    hr
+    h5 Comments
+    +comment_form('/tutorial/' + tut.id + '/comment/')
+    +comments(tut.comments)
+  div.span3.well.well-small
+    h5 Dependencies:
+    +topic_tags(tut.requires)
+    h5 Skill you will learn:
+    +topic_tags(tut.acquires)
+    h5 Statistics
+    +statistics(tut.stat)
+    h5 Share
+    +sharebtn

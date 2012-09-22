@@ -3,3 +3,12 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+    div.row-fluid
+      ul.thumbnails
+        - for (var i = 0; i < 4; ++i) {
+          include bit/tut_card
+        - }
+      ul.thumbnails
+        - for (var i = 0; i < 4; ++i) {
+          include bit/tut_card
+        - }  

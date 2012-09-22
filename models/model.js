@@ -47,9 +47,12 @@ function createSchema(mongoose, fn) {
 			}
 			]});
 
-	console.log("Trying to create User table");
-	var User = mongoose.model('User', userSchema);
+	userSchema.virtual('id')
+	.get(function() {
+		return this._id.toHexString();
+	});
 
+	var User = mongoose.model('User', userSchema);
 
 	var topicSchema = new Schema( {
 		name: String,
@@ -57,39 +60,39 @@ function createSchema(mongoose, fn) {
 		listRelatedTutorial: [
 		{
 			tutorialId: ObjectId,
-			level: Number
 		}
 		],
 	});
 
-	console.log("Trying to create Topic table");
+	topicSchema.virtual('id')
+	.get(function() {
+		return this._id.toHexString();
+	});
 
 	var Topic = mongoose.model('Topic', topicSchema);
 
 	var tutorialSchema = new Schema( {
 		name: String,
 		description: String,
-		content: [
+		author: String,
+		content: String,
+		type: String,
+		imageUrl: String,
+		level: Number,
+		enableTopics: [
 		{
-			step: Number,
-			link: String		
+			topicId: ObjectId
 		}
 		],
-		type: String,
-		level: Number,
-		enableTopic: ObjectId,
-		requiredTopic: [
+		requiredTopics: [
 		{
-			topicId: ObjectId,
-			isRequired: Boolean
+			topicId: ObjectId
 		}
 		]
 	});
 
-	console.log("Trying to create Tutorial table");
 
 	var Tutorial = mongoose.model('Tutorial', tutorialSchema);
-
 
 	var pathSchema = new Schema( {
 		name: String,
@@ -103,20 +106,11 @@ function createSchema(mongoose, fn) {
 		]
 	});
 
-
-	console.log("Trying to create Path table");
-
 	var Path = mongoose.model('Path', pathSchema);
 
 	fn();
 }
 
-ModelProvider.prototype.getCollection= function(callback) {
-				this.db.collection('articles', function(error, article_collection) {
-												if( error ) callback(error);
-												else callback(null, article_collection);
-												});
-};
 
 ModelProvider.prototype.findAllTopic = function(callback) {
 	this.Topic.find(function(err, topics){
@@ -125,117 +119,84 @@ ModelProvider.prototype.findAllTopic = function(callback) {
 		else {
 			callback(null, topics);
 		} 
-	})
+	});
 }
-
-
-ModelProvider.prototype.findPopularTutorial = function(number, callback) {
-
-}
-
-ModelProvider.prototype.findAll = function(callback) {
-				this.getCollection(function(error, article_collection) {
-												if( error ) callback(error)
-												else {
-												article_collection.find().toArray(function(error, results) {
-																if( error ) callback(error)
-																else callback(null, results)
-																});
-												}   
-												});  
-};        
 
 ModelProvider.prototype.findTopicById = function(id, callback) {
-				this.getCollection(function(error, article_collection) {
-												if( error ) callback(error)
-												else {
-												article_collection.findOne({_id: article_collection.db.bson_serializer.ObjectID.createFromHexString(id)}, function(error, result) {
-																if( error ) callback(error) 
-																else callback(null, result)
-																}); 
-												}
-												});
-};  
-
-ModelProvider.prototype.createLearningPath = function(newPath, callback) {
-				var learningPath = new Path();
-				learningPath.name = newPath.name || "";
-				learningPath.description = newPath.description || "";
-				learningPath.content = [];
-				var content = newPath.content;
-				for (var i = 0; i < content.length; i++) {
-								learningPath.content.push(content[i]);
-				}
-				learningPath.save(function(err) {
-												if (err) 
-												console.log(err);
-												});
-}
-
-ModelProvider.prototype.createTopic = function(newTopic, callback) {
-
-	this.getCollection(function(error, article_collection) {
-									if( error ) callback(error)
-									else {
-									if( typeof(articles.length)=="undefined")
-									articles = [articles];
-
-									for( var i =0;i< articles.length;i++ ) {
-									article = articles[i];
-									article.created_at = new Date();
-									if( article.comments === undefined ) article.comments = [];
-									for(var j =0;j< article.comments.length; j++) {
-									article.comments[j].created_at = new Date();
-									}
-									}
-
-									article_collection.insert(articles, function() {
-													callback(null, articles);
-													});
-									}
-									});
+	this.Topic.findById(id, function(err, tuts) {
+		if (err)
+			callback(err);
+		else {
+			callback(null, tuts);
+		}
+	});
 }
 
 
+ModelProvider.prototype.findTutorialById = function(id, callback) {
+	this.Tutorial.findById(id, function(err, tuts) {
+		if (err)
+			callback(err);
+		else {
+			callback(null, tuts);
+		}
+	});
+}
 
-ModelProvider.prototype.createUser = function(articles, callback) {
-				this.getCollection(function(error, article_collection) {
-												if( error ) callback(error)
-												else {
-												if( typeof(articles.length)=="undefined")
-												articles = [articles];
+ModelProvider.prototype.findTutorialByTopicId = function(topicId, number, callback) {
+	var topic = findTopicById(topicId, function(err, tut) {
+		var number = number || 10;
+		if (err)
+			callback(err);
+		else {
+			tutIds = topic.listRelatedTutorial;
+			var listTuts = [];
+			for (var id in tutIds) {
+				findTutorialById(id, function(err, tut) {
+					if (!err) {
+						listTuts.push(tut);
+					}
+				});
+			}
+			callback(null, listTuts);
+		}
+	});
+}
 
-												for( var i =0;i< articles.length;i++ ) {
-												article = articles[i];
-												article.created_at = new Date();
-												if( article.comments === undefined ) article.comments = [];
-												for(var j =0;j< article.comments.length; j++) {
-												article.comments[j].created_at = new Date();
-												}
-												}
+ModelProvider.prototype.createTopic = function(top, callback) {
+	var topic = this.Topic();
+	topic.name = top.name;
+	topic.description = top.description;
+	topic.listRelatedTutorial = [];
+	topic.save(function(err, topic) {
+		if (err) 
+			callback(err);
+		else {
+			callback(null, topic.toObject()._id.toHexString());
+		}
+	});
+}
 
-												article_collection.insert(articles, function() {
-																callback(null, articles);
-																});
-												}
-												});
-};
+ModelProvider.prototype.createTutorial = function(tut, callback) {
+	var tutorial = this.Tutorial();
+	tutorial.name = tut.name;
+	tutorial.description = tut.description;
+	tutorial.author = tut.author || '';
+	tutorial.content = tut.content;
+	tutorial.type = tut.type;
+	tutorial.imageUrl = tut.imageUrl;
+	tutorial.level = tut.level;
+	tutorial.enableTopics = [];
 
-
-
-ModelProvider.prototype.addCommentToModel = function(articleId, comment, callback) {
-				this.getCollection(function(error, article_collection) {
-												if( error ) callback( error );
-												else {
-												article_collection.update(
-																{_id: article_collection.db.bson_serializer.ObjectID.createFromHexString(articleId)},
-																{"$push": {comments: comment}},
-																function(error, article){
-																if( error ) callback(error);
-																else callback(null, article)
-																});
-												}
-												});
-};
-
+	tutorial.requiredTopics = [];
+	console.log(tutorial);
+	tutorial.save(function(err, prod) {
+		console.log(err);
+		if (err)
+			callback(err);
+		else {
+			callback(null, tutorial._id.toHexString());
+		}
+	});
+}
 

@@ -1,8 +1,74 @@
 body {
-  padding: 50px;
+  padding-top:60px;
+  padding-bottom:40px;
+  overflow-y:scroll;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+.im {
+    height: 150px;
+    width: 100%;
+    border: solid 1px white;
+    -o-object-fit: fill;
+    -o-object-position: top center;
+    object-fit: fill;
+    object-position: top center;
+}
+
+.im:hover {
+  opacity:0.5;
+  filter:alpha(opacity=100); /* For IE8 and earlier */
+}
+
+.atext{
+  height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tut-sub-by-wrap {
+  padding-top: 4px;
+  border-top: 1px solid #E2E2E2;
+  margin-top: 4px;
+  height:14px;
+  line-height: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.circle-badge {
+    background: radial-gradient( 5px -9px, circle, white 8%, red 26px );
+    background-color: #15CF8D;
+    border: 0px;
+    border-radius: 30px; /* one half of ( (border * 2) + height + padding ) */
+    box-shadow: 1px 1px 1px black;
+    color: white;
+    font: bold 24px/20px Helvetica, Verdana, Tahoma;
+    height: 30px;
+    line-height: 30px;
+    width: 30px;
+    padding: 1px 1px 1px 1px;
+    text-align: center;
+    vertical-align: middle;
+}
+.path-node-title {
+  display: block;
+  font: bold 24px/20px Helvetica, Verdana, Tahoma;
+  height: 30px;
+  line-height: 30px;
+  padding: 10px 10px 10px 10px;
+  margin: 10px 10px 10px 10px;
+  text-align: left;
+  vertical-align: middle;
+
+}
+
+.externtut {
+  display: block;
+  text-align: center;
 }

@@ -1,0 +1,22 @@
+
+mixin topic_tags(tags)
+  each skill in tags
+    span.label.label-info #{skill}
+    br
+
+mixin statistics(stat)
+  ul.unstyled
+  li
+    i.icon-eye-open
+    span  Views #{stat.views}
+  li
+    i.icon-thumbs-up
+    span  Likes #{stat.likes}
+  li
+    i.icon-share
+    span  Share #{stat.shares}
+
+mixin sharebtn
+  button.btn.btn-small Share
+  button.btn.btn-small Tweet
+  button.btn.btn-small Link
