@@ -1,9 +1,5 @@
 extends layout
-include bit/sidebar
-
-mixin topic_text(tags)
-  each skill in tags
-    span.label #{skill}
+include bit/tut_card
 
 mixin tut_search_item(item)
   div
@@ -25,7 +21,6 @@ block content
   div.span9
     each result in results
       h4 #{result.level}
-      ul
+      div.thumbnails
         each tut in result.tuts
-          li
-            +tut_search_item(tut)
+          +tut_card(tut)

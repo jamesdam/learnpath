@@ -1,20 +1,22 @@
-li.span3
-  div.thumbnail
-    img.im(src="http://devtacular.com/images/article_icon_javascript.png")
-    div.atext
-      a sample heading
-    div.tut-sub-by-wrap
-      span By 
-      a James Dam
-    div.tut-sub-by-wrap
-      span.label(href="/a") tag
-      a.label(href="/a") tag
-      a.label(href="/a") tag
-      a.label(href="/a") tag
-    dib.tut-sub-by-wrap
+mixin topic_text(tags)
+  each skill in tags
+    a  #{skill}
+
+mixin tut_card(tut)
+  div.span3
+    div.thumbnail
+      img.im(src=tut.icon)
+      h5
+        a(href='/tutorial/' + tut.id) #{tut.title}
+      div
+        span By #{tut.createdBy}
       span
-        i.icon-thumbs-up
-        b 1000
-      span
-        i.icon-eye-open
-        b 1000
+        i.icon-tags
+        +topic_text(tut.acquires)
+      div
+        span
+          i.icon-thumbs-up
+          b #{tut.stat.likes}
+        span
+          i.icon-eye-open
+          b #{tut.stat.views}
