@@ -1,0 +1,56 @@
+extends layout
+include bit/sidebar
+
+mixin paths(paths)
+  each path in paths
+    br
+    a(href="#{path.url}")
+      strong #{path.name}
+    div(style="float:right")
+      button.btn.btn-success.btn-small Done
+      span    
+      button.btn.btn-inverse.btn-small Leave
+    br
+
+mixin tutorials(tuts)
+  each tut in tuts
+    br
+    a(href="#{tut.url}")
+      strong #{tut.name}
+    div(style="float:right")
+      button.btn.btn-success.btn-small Done
+      span    
+      button.btn.btn-inverse.btn-small Leave
+    br
+
+
+block content
+  div.row-fluid
+    div.span2
+      a.thumbnail(href="#")
+        img.img-rounded(src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash4/371019_697811725_247259128_q.jpg", alt="", style= "width : 100% ; height : auto",rel="tooltip", title= "click to edit")
+      strong(style = "text-align: center;) #{user.name} 
+      br
+      br  
+      div.well.well-small
+        i "#{user.about}" 
+      ul.unstyled
+        li
+          span #{user.stat.friends} friends
+        li
+          span #{user.stat.paths} paths
+        li
+          span #{user.stat.tutorials} tuttorials
+    div.span7
+      legend Finished Learn Paths (#{user.stat.paths})
+        button.btn.btn-primary(style = "float:right").btn-small View all
+      +paths(user.completedPaths)
+      br
+      br
+      legend Finished Tutorials (#{user.stat.tutorials})
+        button.btn.btn-primary(style = "float:right").btn-small View all
+      +tutorials(user.completedTutorials)
+    div.span3.well.well-small
+      h5 Skills:
+      +topic_tags(user.skills)
+
