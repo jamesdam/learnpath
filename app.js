@@ -127,12 +127,14 @@ app.post('/learnpath/new', routes.postNewLearnpath);
 
 
 app.get('/login', routes.login);
+app.post('/login', routes.postLogin);
+
 app.get('/users/:uid/profile', routes.profile);
 app.get('/learnpath/:lid', routes.learnpath);
 app.get('/tutorial/:tid', routes.tutorial);
 app.get('/profile/:uid', user.profile);
 app.get('/search', search.list);
-app.get('/topic_hint', routes.topic_hint);
+
 
 
 app.post('/tutorial/:tid/comment',routes.postTutorialComment);

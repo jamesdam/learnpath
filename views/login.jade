@@ -1,7 +1,24 @@
 extends layout
 
 block content
-  h2 Login to continue
-  div.span4
-    a.btn(href = '/facebook_login_url')
-      img(src='images/facebook-logo-large.png')
+  div.row-fluid
+    div.span8.well
+      form.form-horizontal(action= "/login" , method= "POST")
+        legend Login
+        div.control-group
+          label.control-label(for="userName") User Name
+          div.controls
+            input#userName.span9(type="text" , placeholder="User name", name ="username")
+        div.control-group
+          label.control-label(for="password") Password
+          div.controls
+            input#password.span9(type="password" , placeholder="Password", name ="password")
+
+        div.control-group
+          div.controls
+            button.span6.btn.btn-primary(type = "submit") Login
+
+    div.span4.well
+      legend Login with
+      a.btn(href = '/facebook_login_url')
+        img(src='images/facebook-logo-large.png')
