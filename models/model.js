@@ -21,8 +21,8 @@ function createSchema(mongoose, fn) {
 	var Schema = mongoose.Schema;
 	var ObjectId = Schema.ObjectId;
 	var userSchema = new Schema({
-			user_name: String,
-			user_email: String,
+			name: String,
+			email: String,
 			listLearnedPath: 
 			[
 			{
@@ -91,18 +91,27 @@ function createSchema(mongoose, fn) {
 		]
 	});
 
+	tutorialSchema.virtual('id')
+	.get(function() {
+		return this._id.toHexString();
+	});
 
 	var Tutorial = mongoose.model('Tutorial', tutorialSchema);
 
 	var pathSchema = new Schema( {
 		name: String,
 		description: String,
+		baseRequirement: [
+			{
+				topicId: ObjectId
+			}
+		],
 		content: [
-		{
+			{
 			step: Number,
 			type: String,
 			itemId: ObjectId,
-		}
+			}
 		]
 	});
 
@@ -135,6 +144,26 @@ ModelProvider.prototype.findTopicById = function(id, callback) {
 
 ModelProvider.prototype.findTutorialById = function(id, callback) {
 	this.Tutorial.findById(id, function(err, tuts) {
+		if (err)
+			callback(err);
+		else {
+			callback(null, tuts);
+		}
+	});
+}
+
+ModelProvider.prototype.findPathById = function(id, callback) {
+	this.Path.findById(id, function(err, tuts) {
+		if (err)
+			callback(err);
+		else {
+			callback(null, tuts);
+		}
+	});
+}
+
+ModelProvider.prototype.findUserById = function(id, callback) {
+	this.User.findById(id, function(err, tuts) {
 		if (err)
 			callback(err);
 		else {
@@ -196,6 +225,40 @@ ModelProvider.prototype.createTutorial = function(tut, callback) {
 			callback(err);
 		else {
 			callback(null, tutorial._id.toHexString());
+		}
+	});
+}
+
+ModelProvider.prototype.createUser = function(us, callback) {
+	var user = this.User();
+	user.name = us.name;
+	user.email = us.mail;
+	user.listLearnedPath = [];
+	user.listLearnedTopic = [];
+	user.listLearnedTutorial = [];
+	user.listRelatedTutorial = [];
+
+	user.save(function(err, user) {
+		if (err) 
+			callback(err);
+		else {
+			callback(null, user._id.toHexString());
+		}
+	});
+}
+
+ModelProvider.prototype.createPath = function(pa, callback) {
+	var path = this.Path();
+	path.name = pa.name;
+	path.description = pa.description;
+	path.baseRequirement = [];
+	path.content = []
+
+	path.save(function(err, path) {
+		if (err) 
+			callback(err);
+		else {
+			callback(null, path._id.toHexString());
 		}
 	});
 }
