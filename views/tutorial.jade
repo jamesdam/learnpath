@@ -1,17 +1,19 @@
 extends layout
-
+include bit/comments
 include bit/sidebar
 
 block content
-  div.span7
+  div.span8
     h3 #{tut.title}
     div -- by #{tut.createdBy}
     hr
     p #{tut.desc}
     p Read the tutorial:
-    a.span6.well.externtut(href=#{tut.url}) #{tut.url}
-    br
+    a.well.externtut(href=tut.url) #{tut.url}
     hr
+    h5 Comments
+    +comment_form('/tut/' + tut.id + '/comment/')
+    +comments(tut.comments)
   div.span3.well.well-small
     h5 Dependencies:
     +topic_tags(tut.requires)

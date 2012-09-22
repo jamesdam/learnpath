@@ -19,6 +19,7 @@ exports.tutorial = function(req, res) {
   } else {
     // fetch tutorial based on id
     var tut = {
+      id: tutorialId,
       title: 'NodeJS web basic',
       createdBy: 'Hung Doan',
       star: 5,
@@ -40,6 +41,11 @@ exports.tutorial = function(req, res) {
         'expressjs-basic',
         'nodejs-basic',
         'javascript',
+      ],
+      comments: [
+          {poster: {name: 'Hung Doan',
+                    profile_url: 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash4/371019_697811725_247259128_q.jpg'},
+          content: 'Hello world!'}
       ]
     };
     res.render('tutorial', {
