@@ -1,12 +1,14 @@
 extends layout
-
+include bit/comments
 include bit/sidebar
 
 block content
   div.row-fluid
     div.span9
       div
-        h2 Path name
+        h3 #{path.title}
+        div -- by #{path.createdBy}
+        hr
         div.path-node-title
           button.circle-badge(data-toggle="collapse", data-target="#path-node-1") 1
           span Topic 1
@@ -19,6 +21,10 @@ block content
           button.circle-badge(data-toggle="collapse", data-target="#path-node-3") 3
           span Topic 3
         div#path-node-3.collapse.in abc
+        hr
+        h5 Comments
+        +comment_form('/learnpath/' + path.id + '/comment/')
+        +comments(path.comments)
     div.span3.well.well-small  
       h5 Statistics
       +statistics(path.stat)

@@ -12,7 +12,7 @@ block content
     a.well.externtut(href=tut.url) #{tut.url}
     hr
     h5 Comments
-    +comment_form('/tut/' + tut.id + '/comment/')
+    +comment_form('/tutorial/' + tut.id + '/comment/')
     +comments(tut.comments)
   div.span3.well.well-small
     h5 Dependencies:
