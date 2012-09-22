@@ -13,9 +13,13 @@ form.form-horizontal(action= "" , method= "POST")
     div.controls
       input#tutAuthor.span6(type="text",placeholder="Author", name ="author")
   div.control-group
-    label.control-label(for="tutUrl") URL
+    label.control-label(for="tutUrl") Tutorial URL
     div.controls
       input#tutUrl.span6(type="text",placeholder="URL", name ="url")
+  div.control-group
+    label.control-label(for="tutImgUrl") Image Url (optional)
+    div.controls
+      input#tutImgUrl.span6(type="text",placeholder="Image Url", name ="imageUrl")
   div.control-group
     label.control-label(for="tutRequires") Dependencies
     div.controls
