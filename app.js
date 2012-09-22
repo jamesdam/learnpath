@@ -4,6 +4,7 @@
 
 var express = require('express')
   , routes = require('./routes')
+  , tutorial = require('./routes/tutorial')
   , user = require('./routes/user')
   , search = require('./routes/search')
   , http = require('http')
@@ -117,7 +118,7 @@ passport.use(new LocalStrategy(
 
 app.get('/', routes.index);
 
-app.get('/tutorial/new', routes.newTutorial);
+app.get('/tutorial/new', tutorial.newTutorial);
 
 // TESTING DATABASE, ENABLE IT LATER
 app.post('/tutorial/new', routes.postNewTutorial);
@@ -131,14 +132,19 @@ app.post('/login', routes.postLogin);
 
 app.get('/users/:uid/profile', routes.profile);
 app.get('/learnpath/:lid', routes.learnpath);
-app.get('/tutorial/:tid', routes.tutorial);
+app.get('/tutorial/:tid', tutorial.tutorial);
 app.get('/profile/:uid', user.profile);
 app.get('/search', search.list);
 
 
 
-app.post('/tutorial/:tid/comment',routes.postTutorialComment);
+app.post('/tutorial/:tid/comment',tutorial.postTutorialComment);
+app.post('/tutorial/:tid/like',tutorial.postTutorialLike);
+app.post('/tutorial/:tid/share',tutorial.postTutorialShare);
+
 app.post('/learnpath/:lid/comment',routes.postLearnpathComment);
+app.post('/learnpath/:lid/like',routes.postLearnpathLike);
+app.post('/learnpath/:lid/share',routes.postLearnpathShare);
 
 app.get('/auth',
   passport.authenticate('local', {failureRedirect: '/login'}),

@@ -200,3 +200,7 @@ ModelProvider.prototype.createTutorial = function(tut, callback) {
 	});
 }
 
+var mongoose = require('mongoose');
+var modelProvider = new ModelProvider(mongoose, '/localhost', 27017);
+
+exports.instance = modelProvider;
