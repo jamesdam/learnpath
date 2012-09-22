@@ -1,3 +1,6 @@
+append head
+  script(src='/new_path_form.js')
+
 form.form-horizontal(action= "" , method= "POST")
   legend Create New Tutorial
   div.control-group
@@ -5,12 +8,13 @@ form.form-horizontal(action= "" , method= "POST")
     div.controls
       input#tutTitle.span6(type="text" , placeholder="Requirements", name ="base")
   div.control-group
-    label.control-label(for="node1") Steps
+    label.control-label(for="node1") Node 1
     div.controls
-      input#pathNode1.span6(type="text",placeholder="...", name ="1")
+      input#pathNode1.span6(type="text",placeholder="Node 1", name ="node1")
   div.control-group
     div.controls
-      a#control-button.btn.btn-primary.btn-small() 1 more step
+      div.control-button
+        a.btn.btn-primary.btn-small(onclick="console.log(this);var e = document.createElement('input'); e.type='text'; e.name = 'node'; this.parent().prev().appendChild(e);") + New Node
 
   div.control-group
     label.control-label(for="pathGoal") Goal
