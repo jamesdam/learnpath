@@ -5,6 +5,7 @@
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , tutorial = require('./routes/tutorial')
   , search = require('./routes/search')
   , http = require('http')
   , path = require('path')
@@ -117,10 +118,10 @@ passport.use(new LocalStrategy(
 
 app.get('/', routes.index);
 
-app.get('/tutorial/new', routes.newTutorial);
+app.get('/tutorial/new', tutorial.newTutorial);
 
 // TESTING DATABASE, ENABLE IT LATER
-app.post('/tutorial/new', routes.postNewTutorial);
+app.post('/tutorial/new', tutorial.postNewTutorial);
 
 app.get('/learnpath/new', routes.newLearnpath);
 app.post('/learnpath/new', routes.postNewLearnpath);
@@ -129,13 +130,16 @@ app.post('/learnpath/new', routes.postNewLearnpath);
 app.get('/login', routes.login);
 app.get('/users/:uid/profile', routes.profile);
 app.get('/learnpath/:lid', routes.learnpath);
-app.get('/tutorial/:tid', routes.tutorial);
+app.get('/tutorial/:tid', tutorial.tutorial);
 app.get('/profile/:uid', user.profile);
 app.get('/search', search.list);
 app.get('/topic_hint', routes.topic_hint);
 
 
-app.post('/tutorial/:tid/comment',routes.postTutorialComment);
+app.post('/tutorial/:tid/comment',tutorial.postTutorialComment);
+app.post('/tutorial/:tid/like',tutorial.postTutorialLike);
+app.post('/tutorial/:tid/share',tutorial.postTutorialShare);
+
 app.post('/learnpath/:lid/comment',routes.postLearnpathComment);
 
 app.get('/auth',
