@@ -2,10 +2,9 @@ doctype 5
 html
   head
     title = title
-    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    include bit/scripts
+    include bit/stylesheets
   body
     include bit/topbar
     div.container
       block content
+    include bit/scripts

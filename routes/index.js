@@ -51,7 +51,7 @@ exports.tutorial = function(req, res) {
 
 exports.learnpath = function(req, res) {
   console.log(req.params);
-  res.send("respond with a resource");
+  res.render('learnpath',{ title: 'Path title' });
 }
 
 /*
@@ -62,11 +62,4 @@ exports.login = function(req, res){
   res.render('login', { title: 'Login' });
 };
 
-/*
- * GET path page.
- */
-exports.login = function(req, res){
-  console.log('path');
-  res.render('path',{ title: 'Path title' });
-};
 
