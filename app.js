@@ -64,7 +64,7 @@ app.post('/tut/new', function(req, res){
   tut.requiredTopics = req.body.requires;
   modelProvider.createTutorial(tut, function(err, tut_id) {
     var title;
-    if (err) 
+    if (err)
       title = err;
     else
       title = tut_id;
@@ -72,7 +72,7 @@ app.post('/tut/new', function(req, res){
     res.render('topic_show.jade', {
       title: title,
       topic: []
-    }); 
+    });
   });
 });
 
@@ -145,6 +145,8 @@ app.post('/tutorial/:tid/share',tutorial.postTutorialShare);
 app.post('/learnpath/:lid/comment',routes.postLearnpathComment);
 app.post('/learnpath/:lid/like',routes.postLearnpathLike);
 app.post('/learnpath/:lid/share',routes.postLearnpathShare);
+
+app.get('/topic_hint', routes.topic_hint);
 
 app.get('/auth',
   passport.authenticate('local', {failureRedirect: '/login'}),
