@@ -65,6 +65,7 @@ app.post('/learnpath/new', routes.postNewLearnpath);
 
 
 app.get('/login', routes.login);
+app.get('/users/:uid/profile', routes.profile);
 app.get('/learnpath/:lid', routes.learnpath);
 app.get('/tutorial/:tid', routes.tutorial);
 app.get('/profile/:uid', user.profile);
