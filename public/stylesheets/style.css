@@ -1,5 +1,8 @@
 body {
-  padding: 50px;
+  padding-top:60px;
+  padding-bottom:40px;
+  background:url(../images/background.png);
+  overflow-y:scroll;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 

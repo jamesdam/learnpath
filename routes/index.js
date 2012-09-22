@@ -10,3 +10,11 @@ exports.index = function(req, res) {
     res.render('index', { title: 'Hello ' + req.user });
   }
 };
+
+/*
+ * GET login page.
+ */
+exports.login = function(req, res){
+  console.log('login');
+  res.render('login',{ title: 'Login' });
+};
