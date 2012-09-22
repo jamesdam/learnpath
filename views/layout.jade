@@ -3,5 +3,18 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
   body
+    div.navbar.navbar-fixed-top
+      div.navbar-inner
+        div.container
+          a.brand(href = '/') Learn Path
+          form.navbar-search.input-preend
+            span.add-on
+              span
+              input.span6(name="query",type="text",placeholder = "search")
+              i.icon-search.icon-white
+          ul.nav.pull-right
+            li
+              a(href="/login") Login
     block content
