@@ -1,6 +1,4 @@
-var ModelProvider = require('../models/model').ModelProvider;
-var mongoose = require('mongoose');
-var modelProvider = new ModelProvider(mongoose, '/localhost', 27017);
+var modelProvider = require('../models/model').instance;
 /*
  * GET home page.
  */
