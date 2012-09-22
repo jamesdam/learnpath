@@ -1,0 +1,21 @@
+mixin image_block(img_url, title, desc)
+  div(style="display:block")
+    div.span1
+      img(src=img_url)
+    div.span6
+      strong #{title}
+      p #{desc}
+
+mixin comment_form(posturl)
+  form(action=posturl, method="POST")
+    textarea(name="comment", style="width: 95%")
+    br
+    button.btn.btn-primary Submit
+
+mixin comments(comments)
+  ul.unstyled
+    each comment in comments
+      li
+        +image_block(comment.poster.profile_url, comment.poster.name, comment.content)
+
+
