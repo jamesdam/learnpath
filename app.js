@@ -55,10 +55,16 @@ passport.use(new LocalStrategy(
 ));
 
 app.get('/', routes.index);
+
+app.get('/tutorial/new', routes.newTutorial);
+app.post('/tutorial/new', routes.postNewTutorial);
+
 app.get('/login', routes.login);
 app.get('/learnpath/:lid', routes.learnpath);
 app.get('/tutorial/:tid', routes.tutorial);
 app.get('/profile/:uid', user.profile);
+
+
 
 app.post('/tutorial/:tid/comment',routes.postTutorialComment);
 app.post('/learnpath/:lid/comment',routes.postLearnpathComment);

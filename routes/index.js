@@ -96,6 +96,14 @@ exports.login = function(req, res){
   res.render('login', { title: 'Login' });
 };
 
+
+
+exports.newTutorial = function(req, res){
+  console.log("new tut ");
+  res.render('new_tut', { title: 'Login' });
+};
+
+
 /*
  * POST tut comment
  */
@@ -113,6 +121,12 @@ exports.postLearnpathComment = function(req, res){
   var comment = req.body.comment;
   var learnpathId  = req.params.lid;
   console.log("comment " + comment + " learnpath id " +learnpathId);
+  res.send("respond with a resource");
+};
+
+exports.postNewTutorial = function(req, res){
+  console.log(req.body);
+  var title = req.body.title;
   res.send("respond with a resource");
 };
 
