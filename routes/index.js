@@ -18,3 +18,12 @@ exports.login = function(req, res){
   console.log('login');
   res.render('login',{ title: 'Login' });
 };
+
+/*
+ * GET path page.
+ */
+exports.login = function(req, res){
+  console.log('path');
+  res.render('path',{ title: 'Path title' });
+};
+

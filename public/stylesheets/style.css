@@ -41,3 +41,32 @@ filter:alpha(opacity=100); /* For IE8 and earlier */
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
+
+.circle-badge {
+    background: radial-gradient( 5px -9px, circle, white 8%, red 26px );
+    background-color: #15CF8D;
+    border: 0px;
+    border-radius: 30px; /* one half of ( (border * 2) + height + padding ) */
+    box-shadow: 1px 1px 1px black;
+    color: white;
+    font: bold 24px/20px Helvetica, Verdana, Tahoma;
+    height: 30px; 
+    line-height: 30px;
+    width: 30px;
+    padding: 1px 1px 1px 1px;
+    text-align: center;
+    vertical-align: middle;
+}
+.path-node-title {
+  display: block;
+  font: bold 24px/20px Helvetica, Verdana, Tahoma;
+  height: 30px; 
+  line-height: 30px;
+  padding: 10px 10px 10px 10px;
+  margin: 10px 10px 10px 10px;
+  text-align: left;
+  vertical-align: middle;
+
+}
+
