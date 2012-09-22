@@ -96,4 +96,26 @@ exports.login = function(req, res){
   res.render('login', { title: 'Login' });
 };
 
+/*
+ * POST tut comment
+ */
+
+exports.postTutorialComment = function(req, res){
+
+  var comment = req.body.comment;
+  var tutorialId  = req.params.tid;
+  console.log("comment " + comment + " tutorial id " +tutorialId);
+  res.send("respond with a resource");
+};
+
+exports.postLearnpathComment = function(req, res){
+
+  var comment = req.body.comment;
+  var learnpathId  = req.params.lid;
+  console.log("comment " + comment + " learnpath id " +learnpathId);
+  res.send("respond with a resource");
+};
+
+
+
 

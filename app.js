@@ -60,6 +60,9 @@ app.get('/learnpath/:lid', routes.learnpath);
 app.get('/tutorial/:tid', routes.tutorial);
 app.get('/profile/:uid', user.profile);
 
+app.post('/tutorial/:tid/comment',routes.postTutorialComment);
+app.post('/learnpath/:lid/comment',routes.postLearnpathComment);
+
 app.get('/auth',
   passport.authenticate('local', {failureRedirect: '/login'}),
   function(req, res) {
