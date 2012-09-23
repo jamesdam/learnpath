@@ -5,16 +5,21 @@ include bit/tut_card
 block content
   h1 = title
   h3 Welcome to #{title}
-  span Discover your learning interest
+  span.floatleft Find the best learning way from all over the web!
+  div.floatright
+    a.btn.btn-primary.padright(href="/tutorial/new") Add tutorial
+    a.btn.btn-primary.padright(href="/learnpath/new") Add learning path
+  div.clearfix
   hr
-  h4 Popular tutorials:
+  h4 Popular Learning Paths:
   ul.thumbnails
     each tut in popular_tuts
       li
-        +tut_card(tut)
-  hr
-  h4 New tutorials:
+        +tut_image_block(tut)
+        hr
+  h4 Popular Tutorials:
   ul.thumbnails
     each tut in new_tuts
       li
-        +tut_card(tut)
+        +tut_image_block(tut)
+        hr

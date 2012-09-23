@@ -1,17 +1,16 @@
 ModelProvider = function(mongoose, host, port){
-	console.log("Trying to connect to db");
-	this.db = mongoose.connect('mongodb://localhost/learnpath');
-	var self = this;
-	console.log(typeof self);
-	createSchema(mongoose, function () {
-			self.User = mongoose.model('User');
-			self.Topic = mongoose.model('Topic');
-			self.Tutorial = mongoose.model('Tutorial');
-			self.Path = mongoose.model('Path');
-			self.KeyWord = mongoose.model('KeyWord');
-			self.addKeyWordToDb();
-			});
-
+  console.log("Trying to connect to db");
+  this.db = mongoose.connect('mongodb://localhost/learnpath');
+  var self = this;
+  console.log(typeof self);
+  createSchema(mongoose, function () {
+    self.User = mongoose.model('User');
+    self.Topic = mongoose.model('Topic');
+    self.Tutorial = mongoose.model('Tutorial');
+    self.Path = mongoose.model('Path');
+    self.KeyWord = mongoose.model('KeyWord');
+    self.addKeyWordToDb();
+  });
 };
 
 exports.ModelProvider = ModelProvider;
@@ -21,9 +20,9 @@ function createSchema(mongoose, fn) {
   var ObjectId = Schema.ObjectId;
   var userSchema = new Schema({
     name: String,
-    email: String,
-    about: String,
-    listLearnedPath:
+      email: String,
+      about: String,
+      listLearnedPath:
     [
   {
     pathId: ObjectId,
@@ -73,15 +72,15 @@ function createSchema(mongoose, fn) {
       return this._id.toHexString();
     });
 
-   userSchema.virtual('numLikedTutorial')
-   .get(function() {
-   	 return this.listLikedTutorial.length;
-   });
+  userSchema.virtual('numLikedTutorial')
+    .get(function() {
+      return this.listLikedTutorial.length;
+    });
 
-   userSchema.virtual('numLikedPath')
-   .get(function() {
-   	 return this.listLikedPath.length;
-   });
+  userSchema.virtual('numLikedPath')
+    .get(function() {
+      return this.listLikedPath.length;
+    });
 
   var User = mongoose.model('User', userSchema);
 
@@ -120,7 +119,7 @@ function createSchema(mongoose, fn) {
   {
     topicId: ObjectId
   }],
-  	  numUserLike: Number,
+      numUserLike: Number,
       likeUsers: [
   {
     userId: ObjectId
@@ -144,7 +143,7 @@ function createSchema(mongoose, fn) {
   var pathSchema = new Schema( {
     name: String,
       description: String,
-      createdDate: Date, 
+      createdDate: Date,
       baseRequirement: [
   {
     userId: ObjectId
@@ -155,16 +154,16 @@ function createSchema(mongoose, fn) {
       type: String,
       itemId: ObjectId,
   }],
-  	numLike: Number,
-    likeUsers: [
+      numLike: Number,
+      likeUsers: [
   {
     userId: ObjectId
   }
   ],
       shareUsers: [
-  {
-    userId: ObjectId
-  }
+      {
+        userId: ObjectId
+      }
   ]
   });
 
@@ -176,7 +175,7 @@ function createSchema(mongoose, fn) {
   var Path = mongoose.model('Path', pathSchema);
 
   var keyWordSchema = new Schema({
-	keyWord: String
+    keyWord: String
   });
 
   var KeyWord = mongoose.model('KeyWord', keyWordSchema);
@@ -227,12 +226,12 @@ ModelProvider.prototype.findUserById = function(id, callback) {
 }
 
 ModelProvider.prototype.findUserByName = function(name, callback) {
-	this.User.findOne({name: name}, function(err, res) {
-	  if (err)
-   	    callback(err);
-   	  else
-   	   	callback(null, res);
-	});
+  this.User.findOne({name: name}, function(err, res) {
+    if (err)
+    callback(err);
+    else
+    callback(null, res);
+  });
 }
 
 ModelProvider.prototype.findPathById = function(id, callback) {
@@ -426,101 +425,101 @@ ModelProvider.prototype.addUserShareTutorial = function(userId, tutorialId, call
 }
 
 RegExp.escape = function(text) {
-    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
 
 ModelProvider.prototype.findListKeyWordWithQuery = function(query, callback) {
-	query = RegExp.escape(query.toLowerCase());
-	query = ".*" + query + ".*";
-	query = new RegExp(query);
-	console.log(query);
-	var keyWordList = this.KeyWord.find({keyWord : query}, function(err, result) {
-		if (err) {
-			callback(err);
-		} else {
-			callback(null, result);
-		}
-	});
+  query = RegExp.escape(query.toLowerCase());
+  query = ".*" + query + ".*";
+  query = new RegExp(query);
+  console.log(query);
+  var keyWordList = this.KeyWord.find({keyWord : query}, function(err, result) {
+    if (err) {
+      callback(err);
+    } else {
+      callback(null, result);
+    }
+  });
 
 }
 
 ModelProvider.prototype.addKeyWordToDb = function() {
-	console.log("Try to add all keywords to db now!!!!");
-	var self = this;
-	this.KeyWord.find(function(err, results) {
-		console.log("Checking if db contains the keywords?");
-		if (err) {
-			console.log(err);
-			return;
-		}
+  console.log("Try to add all keywords to db now!!!!");
+  var self = this;
+  this.KeyWord.find(function(err, results) {
+    console.log("Checking if db contains the keywords?");
+    if (err) {
+      console.log(err);
+      return;
+    }
 
-		if (results.length > 10000) {
-			console.log('fetched already');
-			return;
-		}
-		
-		var fs = require('fs');
-		fs.readFile('tags.txt', function (err, data) {
-	   		
-	   		if (err) return;
-	   		data = new String(data);
-	   		console.log(typeof data);
-	   		console.log(data.length);
-	   		
-	   		var lines = data.split('\n');
-	   		console.log(lines.length);
-		  	
-		  	for (var i = 0; i<lines.length; i++) {
-		  		line = lines[i];
-		  		var keyWord = new self.KeyWord({keyWord: line.trim()});
-		  		keyWord.save();
-		  	}
-		});
-	});
+    if (results.length > 10000) {
+      console.log('fetched already');
+      return;
+    }
+
+    var fs = require('fs');
+    fs.readFile('tags.txt', function (err, data) {
+
+      if (err) return;
+      data = new String(data);
+      console.log(typeof data);
+      console.log(data.length);
+
+      var lines = data.split('\n');
+      console.log(lines.length);
+
+      for (var i = 0; i<lines.length; i++) {
+        line = lines[i];
+        var keyWord = new self.KeyWord({keyWord: line.trim()});
+        keyWord.save();
+      }
+    });
+  });
 }
 
 ModelProvider.prototype.getFeaturedTutorialByDate = function(numRequired, callback) {
-	var numRequired = numRequired || 5;
-	var query = Tutorial.find();
-	query.where('createdDate').sort({field: 'des'}).limit(numRequired).exec(function(err, results) {
-		if (err) 
-			callback(err);
-		else 
-			callback(null, err);
-	});
+  var numRequired = numRequired || 5;
+  var query = Tutorial.find();
+  query.where('createdDate').sort({field: 'des'}).limit(numRequired).exec(function(err, results) {
+    if (err)
+    callback(err);
+    else
+    callback(null, err);
+  });
 }
 
 ModelProvider.prototype.getFeaturedTutorialByLike = function(numRequired, callback) {
-	var numRequired = numRequired || 5;
-	var query = Tutorial.find();
-	query.where('numUserLike').sort({field: 'des'}).limit(numRequired).exec(function(err, results) {
-		if (err) 
-			callback(err);
-		else 
-			callback(null, err);
-	});
+  var numRequired = numRequired || 5;
+  var query = Tutorial.find();
+  query.where('numUserLike').sort({field: 'des'}).limit(numRequired).exec(function(err, results) {
+    if (err)
+    callback(err);
+    else
+    callback(null, err);
+  });
 };
 
 ModelProvider.prototype.getFeaturedPathByDate = function(numRequired, callback) {
-	var numRequired = numRequired || 5;
-	var query = Path.find();
-	query.where('createdDate').sort({field: 'des'}).limit(numRequired).exec(function(err, results) {
-		if (err) 
-			callback(err);
-		else 
-			callback(null, err);
-	});
+  var numRequired = numRequired || 5;
+  var query = Path.find();
+  query.where('createdDate').sort({field: 'des'}).limit(numRequired).exec(function(err, results) {
+    if (err)
+    callback(err);
+    else
+    callback(null, err);
+  });
 }
 
 ModelProvider.prototype.getFeaturedPathByLike = function(numRequired, callback) {
-	var numRequired = numRequired || 5;
-	var query = Path.find();
-	query.where('numUserLike').sort({field: 'des'}).limit(numRequired).exec(function(err, results) {
-		if (err) 
-			callback(err);
-		else 
-			callback(null, err);
-	});
+  var numRequired = numRequired || 5;
+  var query = Path.find();
+  query.where('numUserLike').sort({field: 'des'}).limit(numRequired).exec(function(err, results) {
+    if (err)
+    callback(err);
+    else
+    callback(null, err);
+  });
 };
 
 
@@ -528,3 +527,6 @@ var mongoose = require('mongoose');
 var modelProvider = new ModelProvider(mongoose, '/localhost', 27017);
 
 exports.instance = modelProvider;
+
+
+

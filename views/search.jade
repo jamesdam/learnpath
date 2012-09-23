@@ -1,6 +1,19 @@
 extends layout
 include bit/tut_card
 
+mixin tut_image_block(tut)
+  div(style="display:block")
+    div.leftimage
+      img(src=tut.icon)
+    div.rightcontent
+      a(href='/tutorial/' + tut.id)
+        strong #{tut.title}
+      |  - by #{tut.createdBy}
+      p #{tut.desc.substr(0, 150).concat('...')}
+      +topic_tags(tut.acquires)
+      +inline_stat(tut.stat)
+    div.clearfix
+
 mixin tut_search_item(item)
   div
     a(href='/tutorial/' + item.id)
@@ -21,6 +34,7 @@ block content
   div.span9
     each result in results
       h4 #{result.level}
-      div.thumbnails
+      div
         each tut in result.tuts
-          +tut_card(tut)
+          +tut_image_block(tut)
+          hr

@@ -6,13 +6,13 @@ body {
 }
 
 .im {
-    height: 150px;
-    width: 100%;
-    border: solid 1px white;
-    -o-object-fit: fill;
-    -o-object-position: top center;
-    object-fit: fill;
-    object-position: top center;
+  height: 150px;
+  width: 100%;
+  border: solid 1px white;
+  -o-object-fit: fill;
+  -o-object-position: top center;
+  object-fit: fill;
+  object-position: top center;
 }
 
 .im:hover {
@@ -38,30 +38,32 @@ body {
 
 
 .circle-badge {
-    background: radial-gradient( 5px -9px, circle, white 8%, red 26px );
-    background-color: #15CF8D;
-    border: 0px;
-    border-radius: 30px; /* one half of ( (border * 2) + height + padding ) */
-    box-shadow: 1px 1px 1px black;
-    color: white;
-    font: bold 24px/20px Helvetica, Verdana, Tahoma;
-    height: 30px;
-    line-height: 30px;
-    width: 30px;
-    padding: 1px 1px 1px 1px;
-    text-align: center;
-    vertical-align: middle;
-}
-.path-node-title {
-  display: block;
-  font: bold 24px/20px Helvetica, Verdana, Tahoma;
+  background: radial-gradient( 5px -9px, circle, white 8%, red 26px );
+  background-color: #15CF8D;
+  border: 0px;
+  border-radius: 30px; /* one half of ( (border * 2) + height + padding ) */
+  box-shadow: 1px 1px 1px black;
+  color: white;
+  font: bold 20px Helvetica, Verdana, Tahoma;
   height: 30px;
   line-height: 30px;
-  padding: 10px 10px 10px 10px;
-  margin: 10px 10px 10px 10px;
+  width: 30px;
+  padding: 1px 1px 1px 1px;
+  margin-right: 5px;
+  text-align: center;
+  vertical-align: middle;
+  position: relative;
+  top: -3px;
+}
+
+.path-node-title {
+  display: block;
+  font: bold 15px Helvetica, Verdana, Tahoma;
+  height: 30px;
+  line-height: 30px;
+  margin-bottom: 10px;
   text-align: left;
   vertical-align: middle;
-
 }
 
 .externtut {
@@ -75,4 +77,40 @@ a.btn.btn-mini {
 
 .label {
   margin-right: 3px;
+}
+
+.leftimage {
+  width: 100px;
+  height: 100px;
+  float: left;
+  margin-right: 10px;
+}
+
+.rightcontent {
+  width: 800px;
+}
+
+hr {
+  margin: 5px 0px;
+}
+
+.floatleft {
+  float: left;
+}
+
+.floatright {
+  float: right;
+}
+
+.padright {
+  margin-right: 10px;
+}
+
+.clearfix {
+  clear:both;
+}
+
+.stat_group {
+  display: inline-block;
+  margin-right: 5px;
 }

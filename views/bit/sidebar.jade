@@ -5,15 +5,27 @@ mixin topic_tags(tags)
 
 mixin statistics(stat)
   ul.unstyled
-  li
-    i.icon-eye-open
-    span  Views #{stat.views}
-  li
-    i.icon-thumbs-up
-    span  Likes #{stat.likes}
-  li
-    i.icon-share
-    span  Share #{stat.shares}
+    li
+      i.icon-eye-open
+      span  Views #{stat.views}
+    li
+      i.icon-thumbs-up
+      span  Likes #{stat.likes}
+    li
+      i.icon-share
+      span  Share #{stat.shares}
+
+mixin inline_stat(stat)
+  div
+    span.stat_group
+      i.icon-eye-open
+      span  #{stat.views}
+    span.stat_group
+      i.icon-thumbs-up
+      span  #{stat.likes}
+    span.stat_group
+      i.icon-share
+      span  #{stat.shares}
 
 mixin sharebtn
   button.btn.btn-small Share

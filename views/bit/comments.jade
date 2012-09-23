@@ -2,7 +2,7 @@ mixin image_block(img_url, title, desc)
   div(style="display:block")
     div.span1
       img(src=img_url)
-    div.span6
+    div.span11
       strong #{title}
       p #{desc}
 
@@ -17,5 +17,6 @@ mixin comments(comments)
     each comment in comments
       li
         +image_block(comment.poster.profile_url, comment.poster.name, comment.content)
+        br
 
 

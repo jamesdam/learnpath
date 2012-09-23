@@ -1,9 +1,11 @@
+include sidebar
+
 mixin topic_text(tags)
   each skill in tags
     a  #{skill}
 
 mixin tut_card(tut)
-  div.span3
+  div.span2
     div.thumbnail
       img.im(src=tut.icon)
       h5
@@ -20,3 +22,18 @@ mixin tut_card(tut)
         span
           i.icon-eye-open
           b #{tut.stat.views}
+
+mixin tut_image_block(tut)
+  div(style="display:block")
+    div.leftimage
+      img(src=tut.icon)
+    div.rightcontent
+      a(href='/tutorial/' + tut.id)
+        strong #{tut.title}
+      |  - by #{tut.createdBy}
+      p #{tut.desc.substr(0, 150).concat('...')}
+      div.floatleft
+        +inline_stat(tut.stat)
+      div.floatright
+        +topic_tags(tut.acquires)
+    div.clearfix
