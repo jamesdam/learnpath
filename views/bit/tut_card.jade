@@ -37,3 +37,18 @@ mixin tut_image_block(tut)
       div.floatright
         +topic_tags(tut.acquires)
     div.clearfix
+
+mixin path_image_block(path)
+  div(style="display:block")
+    div.leftimage
+      img(src=path.icon)
+    div.rightcontent
+      a(href='/learnpath/' + path.id)
+        strong #{path.title}
+      |  - by #{path.createdBy}
+      p #{path.desc.substr(0, 150).concat('...')}
+      div.floatleft
+        +inline_stat(path.stat)
+      div.floatright
+        +topic_tags(path.acquires)
+    div.clearfix

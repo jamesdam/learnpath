@@ -10,7 +10,11 @@ block content
     div.span9
       div
         h3 #{path.title}
-        div -- by #{path.createdBy}
+        div
+          span.floatleft -- by #{path.createdBy}
+          div.floatright
+            a.btn.btn-primary(href='/learnpath/' + path.id + '/start') Start
+          div.clearfix
         hr
         p #{path.desc}
         h5 Please follow the following steps:

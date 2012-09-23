@@ -1,36 +1,21 @@
+
 var modelProvider = require('../models/model').instance;
+
+var MockData = require('../MockData.js');
 /*
  * GET home page.
  */
 
 exports.index = function(req, res) {
   if (!req.user) {
-    var tut = {
-      id: 10,
-      icon: 'http://si0.twimg.com/profile_images/1437021459/nodejs-dark.png',
-      title: 'NodeJS web basic',
-      createdBy: 'Hung Doan',
-      star: 5,
-      desc: "In this tutorial I will run you through the process setting up an Express.js app and making it do what a basic website might do. You will learn the basics of routes, views, Jade templates, Stylus CSS engine, handling POST and GET requests.",
-      url: 'http://www.hacksparrow.com/express-js-tutorial.html',
-      stat: {
-        likes: 103,
-        shares: 50,
-        views: 1042
-      },
-      acquires: [
-        'nodejs-basic',
-        'javascript',
-      ],
-    };
     var data = {
       title: 'LearningPath!',
-      popular_tuts: [tut, tut, tut],
-      new_tuts: [tut, tut]
+      paths: MockData.paths,
+      new_tuts: MockData.tuts,
     };
     res.render('index', data);
   } else {
-    res.render('index', { title: req.user });
+    res.render('profile', { title: req.user });
   }
 };
 
@@ -52,7 +37,7 @@ exports.postLogin = function(req, res){
           email:"admin@test.com"
         }
         modelProvider.createUser(user,function(err,result){
-          res.redirect('/auth?username='+req.body.username+'&password='+req.body.password);          
+          res.redirect('/auth?username='+req.body.username+'&password='+req.body.password);
         });
       }
   })
@@ -103,7 +88,7 @@ exports.topic_hint = function(req, res) {
         listResult.push({
           "id": result[i]._id.toHexString(),
           "name": result[i].keyWord
-        }); 
+        });
     }
     res.send(listResult);
     }
