@@ -1,5 +1,9 @@
 form.form-horizontal(action= "" , method= "POST")
-  legend Create New Tutorial
+  legend Create New Learning Path
+  div.control-group
+    label.control-label(for="pathDesc") Description
+    div.controls
+      textarea#pathDesc.span6(rows = "3", placeholder="Description", name ="description")
   div.control-group
     label.control-label(for="pathBase") Base
     div.controls
@@ -15,7 +19,7 @@ form.form-horizontal(action= "" , method= "POST")
   div.control-group
     label.control-label(for="pathGoal") Goal
     div.controls
-      input#pathGoal.span6(type="text",placeholder="Goal", name ="goal")
+      textarea#pathGoal.span6(rows = "3", placeholder="Goal", name ="goal")
   div.control-group
     div.controls
       button.span3.btn.btn-primary(type = "submit") Submit

@@ -38,8 +38,27 @@ exports.newLearnpath = function(req, res){
 };
 
 exports.postNewLearnpath = function(req, res){
-  console.log(req.body);
-  var title = req.body.title;
+
+	var path = {
+		name : req.body.goal,
+		description : req.body.description,
+		content : []
+	};
+	count = 1;
+	while(req.body[count]!= null){
+		path.content.push(req.body[count]);
+		console.log(count);
+		count++;
+	}
+
+	modelProvider.createPath(path, function (err,learnpathId) {
+    var title;
+    if (err) 
+      res.send(err);
+    else
+      res.redirect('/learnpath/'+learnpathId);
+
+	});
 };
 
 exports.postLearnpathComment = function(req, res){
