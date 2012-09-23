@@ -33,7 +33,6 @@ exports.index = function(req, res) {
   }
 };
 
-<<<<<<< HEAD
 exports.learnpath = function(req, res) {
   console.log(req.params);
   var pathId = req.params.lid;
