@@ -75,8 +75,8 @@ exports.login = function(req, res){
 
 exports.postLogin = function(req, res){
   console.log(req.body);
+  
   res.redirect('/auth?username='+req.body.username+'&password='+req.body.password);
-  //res.render('login', { title: 'Login' });
 };
 
 
