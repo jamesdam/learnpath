@@ -117,11 +117,21 @@ exports.profile = function(req, res){
 
 exports.topic_hint = function(req, res) {
   var query = req.query.q;
-  // fetch the list of topics starting with this query
-  res.send([
-      {"id":"856","name":"Javascript"},
-      {"id":"1035","name":"Python"},
-      {"id":"1048","name":"C++"},
-      {"id":"1113","name":"NodeJs"}
-  ]);
+  modelProvider.findListKeyWordWithQuery(query, function(err, result) {
+    if (err) {
+      res.send([]);
+    } else {
+      console.log(result);
+    // fetch the list of topics starting with this query
+    result = result.splice(0, 10);
+    listResult = [];
+    for (var i = 0; i<result.length; i++) {
+        listResult.push({
+          "id": result[i]._id.toHexString(),
+          "name": result[i].keyWord
+        }); 
+    }
+    res.send(listResult);
+    }
+  });
 }

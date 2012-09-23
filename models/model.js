@@ -5,12 +5,11 @@ ModelProvider = function(mongoose, host, port){
 	console.log(typeof self);
 	createSchema(mongoose, function () {
 			self.User = mongoose.model('User');
-			console.log("it runs here!!!!!");
-			console.log(typeof self);
-			console.log(typeof self.User);
 			self.Topic = mongoose.model('Topic');
 			self.Tutorial = mongoose.model('Tutorial');
 			self.Path = mongoose.model('Path');
+			self.KeyWord = mongoose.model('KeyWord');
+			self.addKeyWordToDb();
 			});
 };
 
@@ -159,6 +158,13 @@ pathSchema.virtual('id')
 		});
 
 var Path = mongoose.model('Path', pathSchema);
+
+
+var keyWordSchema = new Schema({
+	keyWord: String
+});
+
+var KeyWord = mongoose.model('KeyWord', keyWordSchema);
 
 fn();
 }
@@ -370,6 +376,59 @@ ModelProvider.prototype.addUserShareTutorial = function(userId, tutorialId, call
 	}
 }
 
+RegExp.escape = function(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+
+ModelProvider.prototype.findListKeyWordWithQuery = function(query, callback) {
+	query = RegExp.escape(query.toLowerCase());
+	query = ".*" + query + ".*";
+	query = new RegExp(query);
+	console.log(query);
+	var keyWordList = this.KeyWord.find({keyWord : query}, function(err, result) {
+		if (err) {
+			callback(err);
+		} else {
+			callback(null, result);
+		}
+	});
+
+}
+
+ModelProvider.prototype.addKeyWordToDb = function() {
+	console.log("Try to add all keywords to db now!!!!");
+	var self = this;
+	this.KeyWord.find(function(err, results) {
+		console.log("Checking if db contains the keywords?");
+		if (err) {
+			console.log(err);
+			return;
+		}
+
+		if (results.length > 10000) {
+			console.log('fetched already');
+			return;
+		}
+		
+		var fs = require('fs');
+		fs.readFile('tags.txt', function (err, data) {
+	   		
+	   		if (err) return;
+	   		data = new String(data);
+	   		console.log(typeof data);
+	   		console.log(data.length);
+	   		
+	   		var lines = data.split('\n');
+	   		console.log(lines.length);
+		  	
+		  	for (var i = 0; i<lines.length; i++) {
+		  		line = lines[i];
+		  		var keyWord = new self.KeyWord({keyWord: line.trim()});
+		  		keyWord.save();
+		  	}
+		});
+	});
+}
 
 var mongoose = require('mongoose');
 var modelProvider = new ModelProvider(mongoose, '/localhost', 27017);
