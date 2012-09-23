@@ -75,8 +75,19 @@ exports.login = function(req, res){
 
 exports.postLogin = function(req, res){
   console.log(req.body);
-  
-  res.redirect('/auth?username='+req.body.username+'&password='+req.body.password);
+  modelProvider.findUserByName(req.body.name, function (err,result){
+      if(err == null && result == null)
+      {
+        var user ={
+          name:req.body.username,
+          email:"admin@test.com"
+        }
+        modelProvider.createUser(user,function(err,result){
+          res.redirect('/auth?username='+req.body.username+'&password='+req.body.password);          
+        });
+      }
+  })
+
 };
 
 

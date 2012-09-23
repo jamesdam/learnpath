@@ -62,7 +62,6 @@ passport.deserializeUser(function(id, done) {
 passport.use(new LocalStrategy(
   function(username, password, done) {
     // Find the user from your DB (MongoDB, CouchDB, other...)
-    console.log('login with ', username, password);
     done(null, username);
   }
 ));
@@ -92,7 +91,7 @@ app.get('/topic_hint', routes.topic_hint);
 app.get('/auth',
   passport.authenticate('local', {failureRedirect: '/login'}),
   function(req, res) {
-    res.redirect('/');
+    res.redirect('/profile/'+req.user);
   }
 );
 
