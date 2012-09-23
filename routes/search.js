@@ -9,6 +9,7 @@ exports.list = function(req, res){
   var tut = {
           title: 'NodeJS web basic',
           id: 10,
+          icon: '/images/python-logo-official.png',
           createdBy: 'Hung Doan',
           desc: "In this tutorial I will run you through the process setting up an Express.js app and making it do what a basic website might do. You will learn the basics of routes, views, Jade templates, Stylus CSS engine, handling POST and GET requests.",
           stat: {

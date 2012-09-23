@@ -1,14 +1,20 @@
 extends layout
 
+include bit/tut_card
+
 block content
   h1 = title
-  p Welcome to #{title}
-    div.row-fluid
-      ul.thumbnails
-        - for (var i = 0; i < 4; ++i) {
-          include bit/tut_card
-        - }
-      ul.thumbnails
-        - for (var i = 0; i < 4; ++i) {
-          include bit/tut_card
-        - }
+  h3 Welcome to #{title}
+  span Discover your learning interest
+  hr
+  h4 Popular tutorials:
+  ul.thumbnails
+    each tut in popular_tuts
+      li
+        +tut_card(tut)
+  hr
+  h4 New tutorials:
+  ul.thumbnails
+    each tut in new_tuts
+      li
+        +tut_card(tut)

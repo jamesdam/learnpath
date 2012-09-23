@@ -1,6 +1,5 @@
 var modelProvider = require('../models/model').instance;
 
-
 exports.tutorial = function(req, res) {
   var tutorialId = req.params.tid;
 
@@ -55,9 +54,6 @@ exports.tutorial = function(req, res) {
   })  
   }
 }
-
-
-
 
 
 exports.newTutorial = function(req, res){
