@@ -4,17 +4,17 @@
 
 var express = require('express')
   , routes = require('./routes')
+  , learnpath = require('./routes/learnpath.js')
   , tutorial = require('./routes/tutorial')
   , user = require('./routes/user')
-  , tutorial = require('./routes/tutorial')
   , search = require('./routes/search')
   , http = require('http')
   , path = require('path')
   , passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy;
 
+console.log
 var app = express();
-var ModelProvider = require('./models/model').ModelProvider;
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -46,56 +46,6 @@ app.get('/topic', function(req, res){
   });
 })
 
-app.get('/tut/new', function(req, res) {
-    res.render('new_tut.jade', {
-        title: 'New Post'
-
-    });
-});
-
-app.post('/tut/new', function(req, res){
-  var tut = {};
-  tut.name = req.body.title;
-  tut.description = req.body.description;
-  tut.author = req.body.author;
-  tut.content = req.body.url;
-  tut.imageUrl = req.body.imageUrl;
-  tut.enableTopics = req.body.acquires;
-  tut.requiredTopics = req.body.requires;
-  modelProvider.createTutorial(tut, function(err, tut_id) {
-    var title;
-    if (err)
-      title = err;
-    else
-      title = tut_id;
-    console.log(title);
-    res.render('topic_show.jade', {
-      title: title,
-      topic: []
-    });
-  });
-});
-
-app.get('/blog/:id', function(req, res) {
-    articleProvider.findById(req.params.id, function(error, article) {
-        res.render('blog_show.jade',
-        {
-            title: article.title,
-            article:article
-        });
-    });
-});
-
-app.post('/blog/addComment', function(req, res) {
-    articleProvider.addCommentToArticle(req.param('_id'), {
-        person: req.param('person'),
-        comment: req.param('comment'),
-        created_at: new Date()
-       } , function( error, docs) {
-           res.redirect('/blog/' + req.param('_id'))
-       });
-});
-
 // to use persistent login session
 passport.serializeUser(function(user, done) {
   console.log('serialize ', user);
@@ -118,36 +68,27 @@ passport.use(new LocalStrategy(
 ));
 
 app.get('/', routes.index);
-
-app.get('/tutorial/new', tutorial.newTutorial);
-
-// TESTING DATABASE, ENABLE IT LATER
-app.post('/tutorial/new', tutorial.postNewTutorial);
-
-app.get('/learnpath/new', routes.newLearnpath);
-app.post('/learnpath/new', routes.postNewLearnpath);
-
-
 app.get('/login', routes.login);
 app.post('/login', routes.postLogin);
-
 app.get('/users/:uid/profile', routes.profile);
-app.get('/learnpath/:lid', routes.learnpath);
-app.get('/tutorial/:tid', tutorial.tutorial);
 app.get('/profile/:uid', user.profile);
-app.get('/search', search.list);
 
-
+app.get('/tutorial/new', tutorial.newTutorial);
+app.get('/tutorial/:tid', tutorial.tutorial);
+app.post('/tutorial/new', tutorial.postNewTutorial);
 app.post('/tutorial/:tid/comment',tutorial.postTutorialComment);
 app.post('/tutorial/:tid/like',tutorial.postTutorialLike);
 app.post('/tutorial/:tid/share',tutorial.postTutorialShare);
 
-app.post('/learnpath/:lid/comment',routes.postLearnpathComment);
-app.post('/learnpath/:lid/like',routes.postLearnpathLike);
-app.post('/learnpath/:lid/share',routes.postLearnpathShare);
+app.get('/learnpath/new', learnpath.newLearnpath);
+app.get('/learnpath/:lid', learnpath.learnpath);
+app.post('/learnpath/new', learnpath.postNewLearnpath);
+app.post('/learnpath/:lid/comment',learnpath.postLearnpathComment);
+app.post('/learnpath/:lid/like',learnpath.postLearnpathLike);
+app.post('/learnpath/:lid/share',learnpath.postLearnpathShare);
 
+app.get('/search', search.list);
 app.get('/topic_hint', routes.topic_hint);
-
 app.get('/auth',
   passport.authenticate('local', {failureRedirect: '/login'}),
   function(req, res) {

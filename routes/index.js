@@ -33,6 +33,7 @@ exports.index = function(req, res) {
   }
 };
 
+<<<<<<< HEAD
 exports.learnpath = function(req, res) {
   console.log(req.params);
   var pathId = req.params.lid;
@@ -79,31 +80,6 @@ exports.postLogin = function(req, res){
   //res.render('login', { title: 'Login' });
 };
 
-
-
-
-exports.newLearnpath = function(req, res){
-  console.log("new path ");
-  res.render('new_path', {});
-};
-
-exports.postNewLearnpath = function(req, res){
-  console.log(req.body);
-  var title = req.body.title;
-};
-
-/*
- * POST tut comment
- */
-
-
-exports.postLearnpathComment = function(req, res){
-
-  var comment = req.body.comment;
-  var learnpathId  = req.params.lid;
-  console.log("comment " + comment + " learnpath id " +learnpathId);
-  res.send("respond with a resource");
-};
 
 exports.profile = function(req, res){
   var uid = req.params.uid;
