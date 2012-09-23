@@ -21,8 +21,9 @@ function createSchema(mongoose, fn) {
   var ObjectId = Schema.ObjectId;
   var userSchema = new Schema({
     name: String,
-      email: String,
-      listLearnedPath:
+    email: String,
+    about: String,
+    listLearnedPath:
     [
   {
     pathId: ObjectId,
@@ -209,6 +210,15 @@ ModelProvider.prototype.findUserById = function(id, callback) {
       callback(null, tuts);
     }
   });
+}
+
+ModelProvider.prototype.findUserByName = function(name, callback) {
+	this.User.findOne({name: name}, function(err, res) {
+	  if (err)
+   	    callback(err);
+   	  else
+   	   	callback(null, res);
+	});
 }
 
 ModelProvider.prototype.findPathById = function(id, callback) {
