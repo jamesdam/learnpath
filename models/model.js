@@ -73,6 +73,16 @@ function createSchema(mongoose, fn) {
       return this._id.toHexString();
     });
 
+   userSchema.virtual('numLikedTutorial')
+   .get(function() {
+   	 return this.listLikedTutorial.length;
+   });
+
+   userSchema.virtual('numLikedPath')
+   .get(function() {
+   	 return this.listLikedPath.length;
+   });
+
   var User = mongoose.model('User', userSchema);
 
   var topicSchema = new Schema( {
@@ -100,6 +110,7 @@ function createSchema(mongoose, fn) {
       type: String,
       imageUrl: String,
       level: Number,
+      createdAt: Date,
       enableTopics: [
   {
     topicId: ObjectId
@@ -109,6 +120,7 @@ function createSchema(mongoose, fn) {
   {
     topicId: ObjectId
   }],
+  	  numUserLike: Number,
       likeUsers: [
   {
     userId: ObjectId
@@ -132,6 +144,7 @@ function createSchema(mongoose, fn) {
   var pathSchema = new Schema( {
     name: String,
       description: String,
+      createdDate: Date, 
       baseRequirement: [
   {
     userId: ObjectId
@@ -142,7 +155,8 @@ function createSchema(mongoose, fn) {
       type: String,
       itemId: ObjectId,
   }],
-      likeUsers: [
+  	numLike: Number,
+    likeUsers: [
   {
     userId: ObjectId
   }
@@ -277,6 +291,12 @@ ModelProvider.prototype.createTutorial = function(tut, callback) {
   tutorial.enableTopics = [];
 
   tutorial.requiredTopics = [];
+
+  tutorial.likeUsers = [];
+  tutorial.shareUsers = [];
+  tutorial.numUserLike = 0;
+
+  tutorial.createdDate = new Date();
   console.log(tutorial);
   tutorial.save(function(err, prod) {
     console.log(err);
@@ -315,7 +335,9 @@ ModelProvider.prototype.createPath = function(pa, callback) {
   path.description = pa.description;
   path.content = [];
   path.likeUsers = [];
+  path.numUserLike = 0;
   path.shareUsers = [];
+  path.createdDate = new Date();
   path.save(function(err, path) {
     if (err)
     callback(err);
@@ -325,6 +347,21 @@ ModelProvider.prototype.createPath = function(pa, callback) {
   });
 }
 
+ModelProvider.prototype.addUserFinishPath = function(userId, pathId, callback) {
+  var user = findUserById(userId);
+  if (user.list.indexOf(pathId) !== -1) {
+    var path = findPathById(pathId);
+    user.listLikedPath.push(createFromHexString(pathId));
+    path.likeUsers.push(createFromHexString(userId));
+    user.save();
+    path.save();
+    callback(null);
+  } else {
+    var err = "Duplicate user-path like";
+    callback(err);
+  }
+}
+
 
 ModelProvider.prototype.addUserLikePath = function(userId, pathId, callback) {
   var user = findUserById(userId);
@@ -332,6 +369,7 @@ ModelProvider.prototype.addUserLikePath = function(userId, pathId, callback) {
     var path = findPathById(pathId);
     user.listLikedPath.push(createFromHexString(pathId));
     path.likeUsers.push(createFromHexString(userId));
+    path.numUserLike = path.numUserLike + 1;
     user.save();
     path.save();
     callback(null);
@@ -362,6 +400,7 @@ ModelProvider.prototype.addUserLikeTutorial = function(userId, tutorialId, callb
     var tut = findTutorialById(pathId);
     user.listLikedTutorial.push(createFromHexString(tutorialId));
     tut.likeUsers.push(createFromHexString(userId));
+    tut.numUserLike = tut.numUserLike + 1;
     user.save();
     tut.save();
     callback(null);
@@ -439,6 +478,51 @@ ModelProvider.prototype.addKeyWordToDb = function() {
 		});
 	});
 }
+
+ModelProvider.prototype.getFeaturedTutorialByDate = function(numRequired, callback) {
+	var numRequired = numRequired || 5;
+	var query = Tutorial.find();
+	query.where('createdDate').sort({field: 'des'}).limit(numRequired).exec(function(err, results) {
+		if (err) 
+			callback(err);
+		else 
+			callback(null, err);
+	});
+}
+
+ModelProvider.prototype.getFeaturedTutorialByLike = function(numRequired, callback) {
+	var numRequired = numRequired || 5;
+	var query = Tutorial.find();
+	query.where('numUserLike').sort({field: 'des'}).limit(numRequired).exec(function(err, results) {
+		if (err) 
+			callback(err);
+		else 
+			callback(null, err);
+	});
+};
+
+ModelProvider.prototype.getFeaturedPathByDate = function(numRequired, callback) {
+	var numRequired = numRequired || 5;
+	var query = Path.find();
+	query.where('createdDate').sort({field: 'des'}).limit(numRequired).exec(function(err, results) {
+		if (err) 
+			callback(err);
+		else 
+			callback(null, err);
+	});
+}
+
+ModelProvider.prototype.getFeaturedPathByLike = function(numRequired, callback) {
+	var numRequired = numRequired || 5;
+	var query = Path.find();
+	query.where('numUserLike').sort({field: 'des'}).limit(numRequired).exec(function(err, results) {
+		if (err) 
+			callback(err);
+		else 
+			callback(null, err);
+	});
+};
+
 
 var mongoose = require('mongoose');
 var modelProvider = new ModelProvider(mongoose, '/localhost', 27017);
