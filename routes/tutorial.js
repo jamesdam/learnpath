@@ -82,7 +82,11 @@ exports.postNewTutorial = function(req, res){
 };
 
 exports.postTutorialComment = function(req, res){
-
+  console.log("user name " +req.user);
+  if(req.user != undefined)
+  {
+    modelProvider.add
+  }
   var comment = req.body.comment;
   var tutorialId  = req.params.tid;
   console.log("comment " + comment + " tutorial id " +tutorialId);
