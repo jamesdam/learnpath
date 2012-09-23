@@ -5,6 +5,7 @@
 
 exports.profile = function(req, res){
 var uid = req.params.uid;
+
   var user = {
     id : uid,
     name : uid,
